@@ -7,6 +7,7 @@ services:
   prometheus:
     image: prom/prometheus:v2.40.1
     container_name: prometheus
+    restart: always
     volumes:
       - ./prometheus:/etc/prometheus
     ports:
@@ -15,6 +16,7 @@ services:
   grafana:
     image: grafana/grafana:8.2.6
     container_name: grafana
+    restart: always
     volumes:
       - ./grafana:/etc/grafana/provisioning
     environment:
@@ -34,6 +36,7 @@ services:
   grafana_db:
     image: mysql:5.6
     container_name: grafana_db
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: grafana
@@ -57,5 +60,6 @@ services:
   primes-nodejs:
     image: ariel17/primes
     container_name: primes
+    restart: always
     ports:
       - 8080:8080

@@ -1,6 +1,7 @@
 # Sources:
 # * https://alexw.co.uk/blog-posts/docker/docker-compose/2021/04/16/grafana-docker-mysql.html
 # * https://github.com/coder-society/nodejs-application-monitoring-with-prometheus-and-grafana
+# * https://grafana.com/grafana/dashboards/893-main/
 ---
 version: "3.9"
 services:
@@ -56,6 +57,18 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 10s
       retries: 10
+
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: cadvisor
+    restart: always
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    expose:
+      - 8090:8080      
 
   primes-nodejs:
     image: ariel17/primes

@@ -34,10 +34,12 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     expose:
       - 8080      
+    ports:
+      - 8090:8080
 
   primes-nodejs:
     image: ariel17/primes
     container_name: primes
     restart: always
     ports:
-      - 8090:8080
+      - 8080:8080

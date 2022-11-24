@@ -4,4 +4,7 @@ scrape_configs:
   - job_name: "primes-nodejs"
     metrics_path: /metrics
     static_configs:
-      - targets: ["primes-nodejs:8080", "cadvisor:8090"]
+      - targets: ["primes-nodejs:8080"]
+  - job_name: "cadvisor"
+    static_configs:
+      - targets: ["cadvisor:8080"]

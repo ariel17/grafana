@@ -20,43 +20,8 @@ services:
     restart: always
     volumes:
       - ./grafana:/etc/grafana/provisioning
-    environment:
-      - GF_DATABASE_HOST=grafana_db:3306
-      - GF_DATABASE_NAME=grafana
-      - GF_DATABASE_USER=grafana
-      - GF_DATABASE_PASSWORD=password
-      - GF_DATABASE_TYPE=mysql
-      - GF_DATABASE_MAX_OPEN_CONN=300
     ports:
       - 3000:3000
-    links:
-      - grafana_db:grafana_db
-    depends_on:
-      - grafana_db
-
-  grafana_db:
-    image: mysql:5.6
-    container_name: grafana_db
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: grafana
-      MYSQL_USER: grafana
-      MYSQL_PASSWORD: password
-    command:
-      [
-        mysqld,
-        --character-set-server=utf8mb4,
-        --collation-server=utf8mb4_unicode_ci,
-        --innodb_monitor_enable=all,
-        --max-connections=1001,
-      ]
-    ports:
-      - 3306:3006
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 10s
-      retries: 10
 
   cadvisor:
     image: google/cadvisor:latest
@@ -68,11 +33,11 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
     expose:
-      - 8090:8080      
+      - 8080      
 
   primes-nodejs:
     image: ariel17/primes
     container_name: primes
     restart: always
     ports:
-      - 8080:8080
+      - 8090:8080
